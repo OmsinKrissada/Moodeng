@@ -60,9 +60,9 @@ class GameScene extends Phaser.Scene {
         this.bounceObjects = this.physics.add.group();
 
         // Timer to spawn obstacles
-        let ghosttime = Phaser.Math.Between(1000, 3000);
-        let hearttime = Phaser.Math.Between(5000, 10000);
-        let owlettime = Phaser.Math.Between(3000, 5000);
+        let ghosttime = 4000;
+        let hearttime = 5000;
+        let owlettime = 6000;
         let eagletime = Phaser.Math.Between(4000, 5000);
         this.time.addEvent({ delay: ghosttime, callback: this.spawnObstacle, callbackScope: this, loop: true });
         this.time.addEvent({ delay: hearttime, callback: this.spawnHeart(this.scale.width - 50, 50), callbackScope: this, loop: true });
@@ -141,6 +141,18 @@ class GameScene extends Phaser.Scene {
             this.player.setVelocityX(-320);
         } else if (this.cursors.right.isDown) {
             this.player.setVelocityX(320);
+        }
+
+        if (this.cursors.down.isDown) {
+            if (!this.isCrawling) {
+                this.player.body.setSize(this.player.width, this.player.height * 0.5); // Halve the height for crawling
+                this.player.body.setOffset(0, this.player.height * 0.5); // Adjust offset to keep the player on the ground
+                this.isCrawling = true;
+            }
+        } else if (this.isCrawling) {
+            this.player.body.setSize(this.player.width, this.player.height); // Reset to original height
+            this.player.body.setOffset(0, 0); // Reset offset
+            this.isCrawling = false;
         }
 
         // Jumping control
@@ -264,7 +276,7 @@ class GameScene extends Phaser.Scene {
         // Create the eagle at the right side of the screen, with a random vertical position
         const eagle = this.monsters.create(this.scale.width, Phaser.Math.Between(100, 300), 'Eagle');
     
-        eagle.setScale(1.5); // Adjust scale if needed
+        eagle.setScale(1.8); // Adjust scale if needed
         eagle.hp = 3; // Set HP for the eagle
         eagle.setVelocityX(-100); // Move eagle to the left
         eagle.play('EagleFly'); // Play flying animation
@@ -442,8 +454,8 @@ class GameScene extends Phaser.Scene {
 
     loadEagle() {
         this.load.spritesheet('Eagle', 'src/assets/sprite/eagle.png', {
-            frameWidth: 32,   // Width of each frame
-            frameHeight: 32   // Height of each frame
+            frameWidth: 40,   // Width of each frame
+            frameHeight: 41   // Height of each frame
         });
     }
 
@@ -475,8 +487,8 @@ class GameScene extends Phaser.Scene {
     setupAnimation() {
         this.anims.create({
             key: 'EagleFly',
-            frames: this.anims.generateFrameNumbers('Eagle', { start: 0, end: 3 }), // Adjust if you have more or fewer frames
-            frameRate: 5,   // Adjust speed as needed
+            frames: this.anims.generateFrameNumbers('Eagle', { start: 0, end: 4}), // Adjust if you have more or fewer frames
+            frameRate: 10,   // Adjust speed as needed
             repeat: -1       // Loop the animation
         });
         this.anims.create({
@@ -488,7 +500,7 @@ class GameScene extends Phaser.Scene {
 
         this.anims.create({
             key: 'explode',
-            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 15 }), // Adjust based on the frame count
+            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 10 }), // Adjust based on the frame count
             frameRate: 20,  // Adjust speed as needed
             hideOnComplete: true  // Automatically hide the explosion after it finishes
         });

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moodeng Run</title>
+    <link rel="icon" type="image/png" href="assets/Moodeng.png">
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+    <div id="overlay"></div>
+    <div id="login-container" style="display: none;">
+        <div id="login-modal">
+            <h2>Welcome Back</h2>
+            <p>Please login to your account</p>
+            <form id="login-form">
+                <input type="text" id="login-username" name="username" placeholder="Username" required>
+                <input type="password" id="login-password" name="password" placeholder="Password" required>
+                <button type="submit" class="primary-button">Login</button>
+                <div class="button-group">
+                    <button type="button" id="show-register" class="secondary-button">Register</button>
+                    <button type="button" id="close-login" class="danger-button">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="register-container" style="display: none;">
+        <div id="register-modal">
+            <h2>Create Account</h2>
+            <p>Fill in the details to register</p>
+            <form id="register-form">
+                <input type="text" id="register-username" name="username" placeholder="Username" required>
+                <input type="password" id="register-password" name="password" placeholder="Password" required>
+                <input type="password" id="register-confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+                <button type="submit" class="primary-button">Register</button>
+                <div class="button-group">
+                    <button type="button" id="show-login" class="secondary-button">Login</button>
+                    <button type="button" id="close-register" class="danger-button">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="leaderboard-container" style="display: none;">
+        <div id="leaderboard-modal">
+            <h2>Leaderboard</h2>
+            <p>Top players with the highest scores</p>
+            <table id="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Leaderboard entries will be added dynamically here -->
+                </tbody>
+            </table>
+            <div class="button-group">
+                <button type="button" id="close-leaderboard" class="danger-button">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>

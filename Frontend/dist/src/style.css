@@ -1,0 +1,375 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevents scrollbars */
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    display: block; /* Ensures the canvas doesn't add extra spaces */
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 999; /* Ensure it appears above everything */
+    display: none; /* Hidden by default */
+}
+
+#login-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Ensure it's above the game canvas */
+    transition: all 0.3s ease-in-out;
+}
+
+#login-modal {
+    background: #FFF2D1; /* น้ำตาลอ่อนเข้มขึ้น */
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); /* เงาลึกขึ้น */
+    border: 3px solid #C8A15E; /* ขอบน้ำตาลเข้ม */
+    text-align: center;
+    width: 360px;
+    position: relative;
+}
+
+#login-modal:before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 2px dashed rgba(192, 151, 94, 0.5); /* เส้นขอบน้ำตาล */
+    border-radius: 22px;
+    pointer-events: none;
+}
+
+#login-modal h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #8B4513; /* น้ำตาลเข้ม */
+}
+
+#login-modal p {
+    font-size: 18px;
+    color: #4F4F4F;
+    margin-bottom: 25px;
+}
+
+#login-modal form input {
+    width: 90%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 2px solid #D3D3D3;
+    border-radius: 12px;
+    font-size: 15px;
+    background: #FBF8F2;
+    outline: none;
+    transition: border 0.3s ease, background 0.3s ease;
+}
+
+#login-modal form input:focus {
+    border-color: #C8A15E; /* น้ำตาลเข้มเมื่อโฟกัส */
+    background: #FFF;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease, transform 0.2s ease;
+}
+
+/* ปุ่ม Login */
+.primary-button {
+    background: linear-gradient(to right, #D2B48C, #B89A6D); /* ครีมเข้มขึ้น */
+    color: white;
+    box-shadow: 0 6px 20px rgba(210, 180, 140, 0.5);
+}
+
+.primary-button:hover {
+    background: linear-gradient(to right, #C9A67D, #B69A7C); /* สีเข็มขึ้น */
+    transform: translateY(-3px);
+}
+
+/* ปุ่ม Register */
+.secondary-button {
+    background: linear-gradient(to right, #F5DEB3, #C8A15E); /* ครีมและน้ำตาลเข้ม */
+    color: white;
+    
+}
+
+.secondary-button:hover {
+    background: linear-gradient(to right, #D2691E, #A0522D); /* น้ำตาลเข้ม */
+    transform: translateY(-3px);
+}
+
+/* ปุ่ม Cancel */
+.danger-button {
+    background: linear-gradient(to right, #F4A460, #C97D5B); /* น้ำตาลอมส้มเข้ม */
+    color: white;
+}
+
+.danger-button:hover {
+    background: linear-gradient(to right, #D2691E, #A0522D); /* น้ำตาลเข้ม */
+    transform: translateY(-3px);
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.button-group button {
+    width: 48%;
+    padding: 14px;
+}
+
+#register-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#register-modal {
+    background: #FFF2D1; /* Light brown background */
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); /* Deep shadow */
+    border: 3px solid #C8A15E; /* Dark brown border */
+    text-align: center;
+    width: 360px;
+    position: relative;
+}
+
+#register-modal:before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 2px dashed rgba(192, 151, 94, 0.5); /* Dashed border */
+    border-radius: 22px;
+    pointer-events: none;
+}
+
+#register-modal h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #8B4513; /* Dark brown */
+}
+
+#register-modal p {
+    font-size: 18px;
+    color: #4F4F4F;
+    margin-bottom: 25px;
+}
+
+#register-modal form input {
+    width: 90%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 2px solid #D3D3D3;
+    border-radius: 12px;
+    font-size: 15px;
+    background: #FBF8F2;
+    outline: none;
+    transition: border 0.3s ease, background 0.3s ease;
+}
+
+#register-modal form input:focus {
+    border-color: #C8A15E; /* Dark brown on focus */
+    background: #FFF;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease, transform 0.2s ease;
+}
+
+/* Register button */
+.primary-button {
+    background: linear-gradient(to right, #D2B48C, #B89A6D); /* Gradient */
+    color: white;
+    box-shadow: 0 6px 20px rgba(210, 180, 140, 0.5);
+}
+
+.primary-button:hover {
+    background: linear-gradient(to right, #C9A67D, #B69A7C); /* Darker gradient */
+    transform: translateY(-3px);
+}
+
+/* Login button */
+.secondary-button {
+    background: linear-gradient(to right, #F5DEB3, #C8A15E); /* Cream and brown gradient */
+    color: white;
+}
+
+.secondary-button:hover {
+    background: linear-gradient(to right, #D2691E, #A0522D); /* Darker brown */
+    transform: translateY(-3px);
+}
+
+/* Cancel button */
+.danger-button {
+    background: linear-gradient(to right, #F4A460, #C97D5B); /* Orange-brown gradient */
+    color: white;
+}
+
+.danger-button:hover {
+    background: linear-gradient(to right, #D2691E, #A0522D); /* Darker brown */
+    transform: translateY(-3px);
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.button-group button {
+    width: 48%;
+    padding: 14px;
+}
+
+
+#leaderboard-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#leaderboard-modal {
+    background: #FFF2D1; /* Light brown background */
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); /* Deep shadow */
+    border: 3px solid #C8A15E; /* Dark brown border */
+    text-align: center;
+    width: 360px;
+    max-width: 90%;
+    position: relative;
+}
+
+#leaderboard-modal:before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 2px dashed rgba(192, 151, 94, 0.5); /* Dashed border */
+    border-radius: 22px;
+    pointer-events: none;
+}
+
+#leaderboard-modal h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #8B4513; /* Dark brown */
+}
+
+#leaderboard-modal p {
+    font-size: 18px;
+    color: #4F4F4F;
+    margin-bottom: 20px;
+}
+
+#leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#leaderboard-table th, 
+#leaderboard-table td {
+    border: 1px solid #C8A15E; /* Dark brown border for table */
+    padding: 10px;
+    font-size: 14px;
+    text-align: left;
+}
+
+#leaderboard-table th {
+    background: #D2B48C; /* Light brown header */
+    color: white;
+}
+
+#leaderboard-table tbody tr:nth-child(even) {
+    background: #FBF8F2; /* Slightly lighter background for alternate rows */
+}
+
+#leaderboard-table tbody tr:nth-child(odd) {
+    background: #FFF;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease, transform 0.2s ease;
+}
+
+/* Close button */
+.danger-button {
+    background: linear-gradient(to right, #F4A460, #C97D5B); /* Orange-brown gradient */
+    color: white;
+}
+
+.danger-button:hover {
+    background: linear-gradient(to right, #D2691E, #A0522D); /* Darker brown */
+    transform: translateY(-3px);
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
